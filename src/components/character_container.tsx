@@ -4,13 +4,11 @@ import Character from "./character";
 
 interface CharacterContainerProps {
   characters: Array<DisneyCharacter>;
-  characterFavourites: Array<number>;
   updateFavourites: (favourites: Array<number>) => void;
 }
 
 const CharacterContainer: React.FC<CharacterContainerProps> = ({
   characters,
-  characterFavourites,
   updateFavourites,
 }) => {
   const buildRows = () => {
@@ -18,15 +16,10 @@ const CharacterContainer: React.FC<CharacterContainerProps> = ({
     let rows: Array<JSX.Element> = [],
       cols: Array<JSX.Element> = [];
 
-    characters.forEach((character, index) => {
-      cols.push(
-        <Character
-          key={character._id}
-          character={character}
-          characterFavourites={characterFavourites}
-          updateFavourites={updateFavourites}
-        />
-      );
+      characters.forEach((character, index) => {
+        cols.push(<Character key={character._id} character={character}
+            updateFavourites={updateFavourites} />);
+            
       if ((index + 1) % 5 === 0) {
         rows.push(
           <div className="character-row" key={index}>
