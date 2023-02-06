@@ -8,24 +8,29 @@ import { DisneyCharacter } from "./disney_character";
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [characters, setCharacters] = useState<Array<DisneyCharacter>>([]);
+  const [characterFavourites, setCharacterFavourites] = useState<number[]>([]);
 
   useEffect(() => {
-     getCharacters(currentPage);
+    getCharacters(currentPage);
   }, [currentPage]);
 
   const getCharacters = async (pageNumber: number) => {
-      const apiResponse = await fetch(
-        `http://api.disneyapi.dev/characters?page=${pageNumber}`
-      );
-      const json = (await apiResponse.json()) as { data: DisneyCharacter[] };
-      setCharacters(json.data);
+    const apiResponse = await fetch(
+      `http://api.disneyapi.dev/characters?page=${pageNumber}`
+    );
+    const json = (await apiResponse.json()) as { data: DisneyCharacter[] };
+    setCharacters(json.data);
   };
 
   return (
     <div className="page">
       <Header currentPage={currentPage} />
       <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
-      <CharacterContainer characters={characters} />
+      <CharacterContainer
+        characters={characters}
+        characterFavourites={characterFavourites}
+        updateFavourites={setCharacterFavourites}
+      />
     </div>
   );
 };
