@@ -8,15 +8,18 @@ import { DisneyCharacter } from "./disney_character";
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [characters, setCharacters] = useState<Array<DisneyCharacter>>([]);
-  const getCharacters = async (pageNumber: number) => {
-    const apiResponse = await fetch(`http://api.disneyapi.dev/characters?page=${pageNumber}`);
-    const json = await apiResponse.json() as {data:DisneyCharacter[]};
-    setCharacters(json.data);
-  };
 
   useEffect(() => {
-    console.log("useEffect triggered");
+     getCharacters(1);
   }, []);
+
+  const getCharacters = async (pageNumber: number) => {
+      const apiResponse = await fetch(
+        `http://api.disneyapi.dev/characters?page=${pageNumber}`
+      );
+      const json = (await apiResponse.json()) as { data: DisneyCharacter[] };
+      setCharacters(json.data);
+  };
 
   return (
     <div className="page">
